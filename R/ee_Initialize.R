@@ -317,7 +317,7 @@ ee_create_credentials_earthengine <- function(email_clean, display) {
 #' Save EE credentials
 #' @noRd
 ee_save_eecredentials <- function(url, code_verifier, main_ee_credential, user_ee_credential) {
-  browseURL(url)
+  try(browseURL(url), silent=TRUE) #Skip for headless machines
   auth_code <- readline("Enter Earth Engine Authentication: ")
   token <- ee$oauth$request_token(auth_code, code_verifier)
   credential <- sprintf('{"refresh_token":"%s"}', token)
